@@ -7,6 +7,7 @@ Reusable instructions for AI coding agents. Each skill is a folder containing a 
 | Skill | Purpose |
 | --- | --- |
 | [w3-feature-documentation](skills/w3-feature-documentation/SKILL.md) | Create and maintain a product feature catalogue, user stories, and acceptance criteria. |
+| [w3-skill-improvement](skills/w3-skill-improvement/SKILL.md) | Propose actionable improvements to W3 Frame skills as GitHub issues. |
 
 ## Install in a project
 
@@ -24,6 +25,14 @@ Alternatively, copy the entire `skills/w3-feature-documentation` folder into the
 
 Ask the agent to document a product capability, or explicitly invoke `w3-feature-documentation` using the syntax supported by your agent (for example, `$w3-feature-documentation` in Codex). Provide the relevant product context and decisions; the skill does not infer them from its guide. Review the resulting specifications and unresolved decisions with the product owner.
 
+Install `w3-skill-improvement` as well to help capture useful improvements discovered while using W3 Frame skills:
+
+```sh
+npx skills add W3-Frame/agent-skills --skill w3-skill-improvement
+```
+
+It searches for existing proposals and, when authorized, creates a sanitized issue in this repository. `w3-feature-documentation` invokes it when available and it discovers a concrete improvement. Skills do not run automatically on every agent action; install both skills in the same scope and agent for this workflow.
+
 ## Upgrading from the previous name
 
 The skill was renamed from `feature-documentation` to `w3-feature-documentation`. Install the new name using the command above, then remove the old installation if you no longer need it:
@@ -40,6 +49,6 @@ Review the removal prompt, especially if another source also provides a skill wi
 
 ## Maintaining this collection
 
-Prefix every skill name with `w3-` and add it under `skills/<skill-name>/` with a `SKILL.md` containing the matching YAML `name` and a `description`. Keep supporting material in the same folder so installations remain self-contained. Changes to shared guidance affect future installations; consumers should update their installed copy deliberately.
+Prefix every skill name with `w3-` and add it under `skills/<skill-name>/` with a `SKILL.md` containing the matching YAML `name` and a `description`. For task-oriented skills, add a brief instruction to use `w3-skill-improvement` when available if using the skill reveals a concrete improvement, and to report the idea locally otherwise. Keep supporting material in the same folder so installations remain self-contained. Changes to shared guidance affect future installations; consumers should update their installed copy deliberately.
 
 The feature guide is based on [Tandem's feature documentation guide](https://github.com/hermannleboss/Tandem/blob/develop/docs/features/GUIDE.md); access to that source requires permission. This repository maintains its own copy so the skill works independently of Tandem.
