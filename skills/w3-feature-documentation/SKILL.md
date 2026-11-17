@@ -1,5 +1,5 @@
 ---
-name: feature-documentation
+name: w3-feature-documentation
 description: Create or update a product feature catalogue, user stories, and acceptance criteria grounded in project decisions and evidence. Use when documenting intended product capabilities, their scope, status, or coverage; not for implementation-only tasks.
 ---
 
