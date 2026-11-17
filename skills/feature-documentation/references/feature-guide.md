@@ -6,7 +6,7 @@ Use this guide to document a product's intended capabilities and track their sta
 
 - **Module:** a functional domain grouping related capabilities, such as task management. A submodule may group related features when useful.
 - **Feature:** a specific capability that enables a user or another system to achieve an identifiable, observable result. It has a clear scope and is testable independently of its technical implementation.
-- **User story (US):** a need stated from an actor's perspective: **As** an actor, **I want** a capability, **so that** I achieve a meaningful outcome. The default story uses the feature's title and identifier.
+- **User story (US):** a need stated from an actor's perspective: **As** an actor, **I want** a capability, **so that** I achieve a meaningful outcome. A feature contains one or more stories, each with its own identifier.
 - **Acceptance criterion (AC):** a verifiable condition describing an expected result or rule for a story. Each criterion has its own identifier and checkbox.
 
 For example, **Task management** is a module; **Create a task** is a feature; the story explains who needs to create it and why; its criteria describe the observable behavior, including relevant rules and failures.
@@ -29,18 +29,20 @@ A feature is defined once regardless of access channel. If a capability is avail
 
 ## Identifiers
 
-Give each module a unique prefix. A feature and its default story share `US-<MODULE>-<NUMBER>`, for example `US-TASK-001`. Its criteria use `AC-US-<MODULE>-<NUMBER>-<CRITERION>`, for example `AC-US-TASK-001-01`.
+Give each module a unique prefix. Assign features `FEAT-<MODULE>-<NUMBER>`, for example `FEAT-TASK-001`, and stories `US-<MODULE>-<NUMBER>`, for example `US-TASK-001`. Number features and stories independently across the module, using at least three digits. Criteria belong to a story and use `AC-US-<MODULE>-<STORY-NUMBER>-<CRITERION>`, for example `AC-US-TASK-001-01`.
 
-Keep IDs stable: assign unused numbers and do not renumber existing entries after reordering or removal. If a project needs multiple stories under one feature, decide and document an extension to this convention before creating them. When migrating existing documentation, preserve a mapping from old IDs to new IDs and keep any unmigrated criteria accessible.
+Allocate each new story the next unused story number in its module, regardless of its feature. For example, if stories in Task Management already use numbers through `US-TASK-016`, a second story for `FEAT-TASK-001` receives `US-TASK-017`. Nest or link stories under their feature to show their relationship; matching numbers do not establish it.
+
+Keep IDs stable: never reuse or renumber assigned identifiers after reordering, removal, or moving a story between features in the same module. When migrating existing documentation, preserve a mapping from old IDs to new IDs, update links and references, and keep any unmigrated criteria accessible.
 
 ## Feature catalogue file (`README.md`)
 
 The catalogue is a navigation and tracking overview. The module file owns the detailed product model, stories, and criteria; do not copy those details into the catalogue. Start with a short purpose and status legend, followed by a module table and feature tables grouped by module.
 
 - **Module / Scope:** link to the module file and summarize its domain or feature count. A count is not a completion measure.
-- **ID / Feature:** show the shared feature/story ID and link the feature title to its definition in the module file.
+- **ID / Feature:** show the feature ID and link the feature title to its definition in the module file.
 - **Intended scope:** state the project's intended release or mark it proposed or undecided. Scope is separate from progress.
-- **Status:** use the feature's assessed state; keep it consistent with its module's status overview.
+- **Status:** use the feature's assessed state, consistent with the evidence and the states of its stories; do not infer acceptance solely from their count or completion.
 
 Example catalogue structure and rows:
 
@@ -65,7 +67,7 @@ Not assessed: evidence has not been examined.
 
 | ID            | Feature                                             | Intended scope      | Status       |
 | ------------- | --------------------------------------------------- | ------------------- | ------------ |
-| `US-TASK-001` | [Create a task](tasks.md#us-task-001-create-a-task) | MVP execution scope | Not assessed |
+| `FEAT-TASK-001` | [Create a task](tasks.md#feat-task-001-create-a-task) | MVP execution scope | Not assessed |
 ```
 
 ## Module file structure
@@ -78,15 +80,15 @@ Define the concepts, relationships, boundaries, and rules shared by multiple fea
 
 ### Status overview
 
-List each feature's default story with these columns:
+List every story with these columns, including each story when a feature has several:
 
 | Column         | Meaning                                                              |
 | -------------- | -------------------------------------------------------------------- |
-| User story     | Stable shared feature/story ID, linked to its feature section.       |
-| Feature        | Short capability title; use the same title for the default story.    |
+| User story     | Stable story ID, linked to its story section.                        |
+| Feature        | Feature ID and title, linked to its feature section.                 |
 | Actor          | Person or external system seeking the outcome.                       |
 | Intended scope | Intended release or explicit proposed/undecided scope.               |
-| Status         | Assessed feature state; not a substitute for coverage or acceptance. |
+| Status         | Assessed story state; not a substitute for coverage or acceptance.   |
 
 ### Test coverage overview
 
@@ -94,7 +96,7 @@ List the same stories with `User story`, `Main journey`, `Criteria coverage`, an
 
 ### Features and user stories
 
-For each feature, use its shared ID and title as a heading. Record the submodule if applicable, intended scope, and specification status. Under it, write the default story with the same ID and title, then its checkbox criteria. Group criteria into **Main journey** and **Business rules and edge cases** where applicable. Close the module with links to relevant product documents or decision records.
+For each feature, use its feature ID and title as a heading. Record the submodule if applicable, intended scope, and specification status. Under it, give each story its own story ID and title, followed by its checkbox criteria. Group criteria into **Main journey** and **Business rules and edge cases** where applicable. Close the module with links to relevant product documents or decision records.
 
 The following is an illustrative module file. The actor and outcomes are examples, not requirements for every project:
 
@@ -109,7 +111,7 @@ A task is work belonging to a project. Tasks may be organized without being dupl
 
 | User story  | Feature       | Actor          | Intended scope      | Status       |
 | ----------- | ------------- | -------------- | ------------------- | ------------ |
-| US-TASK-001 | Create a task | Project member | MVP execution scope | Not assessed |
+| [US-TASK-001](#us-task-001-create-a-task) | [FEAT-TASK-001 Create a task](#feat-task-001-create-a-task) | Project member | MVP execution scope | Not assessed |
 
 ## Test coverage overview
 
@@ -119,7 +121,7 @@ A task is work belonging to a project. Tasks may be organized without being dupl
 
 ## Features
 
-### US-TASK-001 Create a task
+### FEAT-TASK-001 Create a task
 
 **Submodule:** Task organization
 
@@ -156,12 +158,12 @@ Write criteria for the relevant main journey, business rules, and edge or error 
 
 1. Read the project's vision, decisions or ADRs, product model, scope, and open questions. Distinguish accepted decisions from proposals.
 2. Group the functional domains into modules. Identify distinct capabilities within each, using submodules only when they clarify the grouping. Do not turn UI clicks or implementation tasks into features.
-3. Assign stable IDs and add each feature to both the catalogue and its module file. State its actor, need, expected outcome, scope, and acceptance criteria.
-4. Capture shared concepts in the module product model. Specify feature-specific behavior in its story and criteria; refer to the project's decision records for the rationale.
+3. Assign stable feature and story IDs and add each feature to both the catalogue and its module file. State each story's actor, need, expected outcome, scope, and acceptance criteria.
+4. Capture shared concepts in the module product model. Specify feature-specific behavior in its stories and criteria; refer to the project's decision records for the rationale.
 5. Populate status and coverage overviews from evidence. If the evidence has not been assessed, say so; an unassessed entry does not mean tests are absent or passing.
 6. Review consistency and links, preserve earlier requirements during migrations, and run the project's documentation and formatting checks.
 
-Use these feature states consistently: **Not assessed** (evidence not examined), **To do** (accepted work not started), **In progress**, **Awaiting validation**, **Done** (verified and accepted), and **Abandoned** (explicitly dropped). State is distinct from the intended release. In the coverage overview, identify the main journey, assessed criteria coverage, and known gaps; use **Not assessed** when no mapping exists.
+Use these states consistently for features and stories: **Not assessed** (evidence not examined), **To do** (accepted work not started), **In progress**, **Awaiting validation**, **Done** (verified and accepted), and **Abandoned** (explicitly dropped). Assess the feature as a whole when it contains multiple stories; do not assume one story's state applies to the entire feature. State is distinct from the intended release. In the coverage overview, identify the main journey, assessed criteria coverage, and known gaps; use **Not assessed** when no mapping exists.
 
 Leave an AC unchecked until it has been verified. A checked criterion alone does not establish acceptance of the entire story. Track implementation status, test coverage, test run results, and product acceptance as separate facts; a closed issue, merged PR, or passing CI does not establish acceptance by itself.
 
