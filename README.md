@@ -28,4 +28,4 @@ Ask the agent to document a product capability, or explicitly invoke `feature-do
 
 Add each skill under `skills/<skill-name>/` with a `SKILL.md` containing a YAML `name` and `description`. Keep supporting material in the same folder so installations remain self-contained. Changes to shared guidance affect future installations; consumers should update their installed copy deliberately.
 
-The feature guide is adapted from [Tandem's feature documentation guide](https://github.com/hermannleboss/Tandem/blob/develop/docs/features/GUIDE.md); access to that source requires permission. This repository maintains its own version of the guide, including separate identifiers for features and stories, so the skill works independently of Tandem.
+The feature guide is based on [Tandem's feature documentation guide](https://github.com/hermannleboss/Tandem/blob/develop/docs/features/GUIDE.md); access to that source requires permission. This repository maintains its own copy so the skill works independently of Tandem.
