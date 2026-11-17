@@ -6,10 +6,10 @@ Use this guide to document a product's intended capabilities and track their sta
 
 - **Module:** a functional domain grouping related capabilities, such as task management. A submodule may group related features when useful.
 - **Feature:** a specific capability that enables a user or another system to achieve an identifiable, observable result. It has a clear scope and is testable independently of its technical implementation.
-- **User story (US):** a need stated from an actor's perspective: **As** an actor, **I want** a capability, **so that** I achieve a meaningful outcome. The default story uses the feature's title and identifier.
+- **User story (US):** a need stated from an actor's perspective: **As** an actor, **I want** a capability, **so that** I achieve a meaningful outcome. The default story uses the feature's title and has its own identifier derived from the feature root.
 - **Acceptance criterion (AC):** a verifiable condition describing an expected result or rule for a story. Each criterion has its own identifier and checkbox.
 
-For example, **Task management** is a module; **Create a task** is a feature; the story explains who needs to create it and why; its criteria describe the observable behavior, including relevant rules and failures.
+For example, **Task management** is a module; **Create a task** is a feature; the story explains who needs to create it and why; its criteria describe the observable behavior, including relevant rules and failures. A feature can have one story or multiple stories, each with its own criteria.
 
 ## Folder layout
 
@@ -29,16 +29,23 @@ A feature is defined once regardless of access channel. If a capability is avail
 
 ## Identifiers
 
-Give each module a unique prefix. A feature and its default story share `US-<MODULE>-<NUMBER>`, for example `US-TASK-001`. Its criteria use `AC-US-<MODULE>-<NUMBER>-<CRITERION>`, for example `AC-US-TASK-001-01`.
+Give each module a unique prefix. A feature uses `FEAT-<MODULE>-<FEATURE>`, with a three-digit feature number. The story ID depends on the number of stories under that feature:
 
-Keep IDs stable: assign unused numbers and do not renumber existing entries after reordering or removal. If a project needs multiple stories under one feature, decide and document an extension to this convention before creating them. When migrating existing documentation, preserve a mapping from old IDs to new IDs and keep any unmigrated criteria accessible.
+| Feature                                  | Stories                            | Acceptance criteria                            |
+| ---------------------------------------- | ---------------------------------- | ---------------------------------------------- |
+| `FEAT-TASK-001` with one story           | `US-TASK-001`                      | `AC-US-TASK-001-01`, `AC-US-TASK-001-02`       |
+| `FEAT-TASK-001` with two or more stories | `US-TASK-001-01`, `US-TASK-001-02` | `AC-US-TASK-001-01-01`, `AC-US-TASK-001-02-01` |
+
+Story and criterion suffixes use two digits. When adding a second story, rename the existing `US-TASK-001` to `US-TASK-001-01` and its criteria accordingly; give the new story `US-TASK-001-02`. Update references, anchors, tests, and other consumers, and retain an old-to-new mapping for the migration. Renaming can break external links: identify and update known consumers before completing it.
+
+Otherwise keep IDs stable, assign unused numbers, and do not renumber entries after reordering or removal. Once a feature has used multiple story suffixes, retain those suffixes even if a story is later removed, so remaining references stay stable. Preserve any unmigrated criteria during a migration.
 
 ## Feature catalogue file (`README.md`)
 
 The catalogue is a navigation and tracking overview. The module file owns the detailed product model, stories, and criteria; do not copy those details into the catalogue. Start with a short purpose and status legend, followed by a module table and feature tables grouped by module.
 
 - **Module / Scope:** link to the module file and summarize its domain or feature count. A count is not a completion measure.
-- **ID / Feature:** show the shared feature/story ID and link the feature title to its definition in the module file.
+- **ID / Feature:** show the feature ID and link the feature title to its definition in the module file.
 - **Intended scope:** state the project's intended release or mark it proposed or undecided. Scope is separate from progress.
 - **Status:** use the feature's assessed state; keep it consistent with its module's status overview.
 
@@ -63,9 +70,9 @@ Not assessed: evidence has not been examined.
 
 ### Task management
 
-| ID            | Feature                                             | Intended scope      | Status       |
-| ------------- | --------------------------------------------------- | ------------------- | ------------ |
-| `US-TASK-001` | [Create a task](tasks.md#us-task-001-create-a-task) | MVP execution scope | Not assessed |
+| ID              | Feature                                               | Intended scope      | Status       |
+| --------------- | ----------------------------------------------------- | ------------------- | ------------ |
+| `FEAT-TASK-001` | [Create a task](tasks.md#feat-task-001-create-a-task) | MVP execution scope | Not assessed |
 ```
 
 ## Module file structure
@@ -78,11 +85,11 @@ Define the concepts, relationships, boundaries, and rules shared by multiple fea
 
 ### Status overview
 
-List each feature's default story with these columns:
+List each story with these columns; when a feature has multiple stories, use one row per story:
 
 | Column         | Meaning                                                              |
 | -------------- | -------------------------------------------------------------------- |
-| User story     | Stable shared feature/story ID, linked to its feature section.       |
+| User story     | Stable story ID, linked to its story section.                        |
 | Feature        | Short capability title; use the same title for the default story.    |
 | Actor          | Person or external system seeking the outcome.                       |
 | Intended scope | Intended release or explicit proposed/undecided scope.               |
@@ -94,7 +101,7 @@ List the same stories with `User story`, `Main journey`, `Criteria coverage`, an
 
 ### Features and user stories
 
-For each feature, use its shared ID and title as a heading. Record the submodule if applicable, intended scope, and specification status. Under it, write the default story with the same ID and title, then its checkbox criteria. Group criteria into **Main journey** and **Business rules and edge cases** where applicable. Close the module with links to relevant product documents or decision records.
+For each feature, use its feature ID and title as a heading. Record the submodule if applicable, intended scope, and specification status. Under it, write the default story with its own ID and the same title, then its checkbox criteria. Additional stories use numbered IDs under the same feature root. Group criteria into **Main journey** and **Business rules and edge cases** where applicable. Close the module with links to relevant product documents or decision records.
 
 The following is an illustrative module file. The actor and outcomes are examples, not requirements for every project:
 
@@ -119,7 +126,7 @@ A task is work belonging to a project. Tasks may be organized without being dupl
 
 ## Features
 
-### US-TASK-001 Create a task
+### FEAT-TASK-001 Create a task
 
 **Submodule:** Task organization
 
